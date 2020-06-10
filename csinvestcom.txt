@@ -1,0 +1,22 @@
+WEBSITE FOR ALL INVESTING STUFF
+
+- login with stean
+- loads your inventory and prices every day at 0:00 
+- paste it into a pdf file which you can download (like an excel table)
+- sum your inv every night at 0:00, save data and draw a diagram about the history
+
+- check prices on different websites like idealo 
+    - skinbaron, hellcase, bitskin, skinbay, swap.gg, float
+
+ADVANCED:
+- sell items on steam
+
+TOOLS:
+- steam api (maybe webscape from csgostash)
+
+Python:
+- flask
+- pandas
+- numpy
+- maybe email libary
+- openid for stean login 
