@@ -22,9 +22,11 @@ def get_inventory(steamid):
             if item.startswith("Sealed") or item.startswith("Graffiti") or item.endswith("Medal"):
                 pass
             else:
-                x[item] = steam_client.market.fetch_price(item, GameOptions.CS)["median_price"]
+                x[item] = steam_client.market.fetch_price(item, GameOptions.CS)
         except:
             time.sleep(60)
     print(x)
 
-    return jsonify({"items": inv, "item_price": x}), 200 # TODO geht!, aber nur x returnen
+    return jsonify(x), 200 # TODO geht!, aber nur x returnen
+
+    # TODO anuahl bekommt man mit der id eines items (sw-case: 519977179) und dann durch einen loop in rgInventory -> also einmal durch rgInventory loope, werte in einer liste speicher, diese werte zählen und dann den namen rausfinden
