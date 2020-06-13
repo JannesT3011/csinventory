@@ -14,6 +14,7 @@ def get_inventory(steamid):
     # TODO es muss ein Token übergeben werden, der diesen Teil autorisiert, wenn dieser nicht stimmt wird der teil nicht gecallt -> redirect zur db json call route
     # TODO neue Method erstellen die du Uhrzeit checkt und den Programm teil um 0:01 triggert ODER wenn es viele ids in der DB gibt, jede Stunde den programmteil mit einer anderen ID triggert (for loop durch die IDs) -> wenn Prozess fertig: Email an Nutzer.
     # TODO Nutzer kann sich sein INV in einem PDF doc runterladen (Items werden aufgeführt: `mengex Itemname`, am Ende steht der Heutige Cashout betrag, welcher auch auf den Startbildschirm des Nutzer (bei login stehen soll)) -> Aufbau wie bei einer Rechnung (FF; Unterschrift als joke am Ende)
+    # TODO Advanced Function: item per Steam api verkaufen über eigenen API token, bei login muss der USer seinen eigenen Api token angeben: wenn login -> Programm benutzt diesen Api token!
     #data = request.get_json() # TODO: steamid nicht über paramter übergeben, sondern über body dict
     #steamid = data["steam_id"]
     data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
