@@ -1,5 +1,5 @@
 from flask_sqlalchemy import sqlalchemy
-
+# mpngodb oder sql
 # TODO: inventarwerte wird in einer Tablle mit primary key steamid gespeichert , andere werte zum einloggen in die USER table!
 
 """
