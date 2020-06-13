@@ -34,13 +34,19 @@ def get_inventory(steamid):
             else:
                 #items[item_]["amount"] = amount[item["classid"]]
                 #print(item["classid"])
-                items[item_] = steam_client.market.fetch_price(item_, GameOptions.CS, currency=Currency.EURO) # die möglichkeit in euro umzurechnen
+                steam_info = steam_client.market.fetch_price(item_, GameOptions.CS, currency=Currency.EURO)
+                items[item_] = steam_info # die möglichkeit in euro umzurechnen
                 items[item_]["amount"] = amount[item["classid"]]
+                items[item_]["total"] = items[item_]["amount"] * float(steam_info["median_price"].split(" USD")[0].split("$")[1])
                 # TODO items dict in db speichern, dieser wird nur einmal am Tag gerefresht
         except:
             print("sleep...")
             time.sleep(60)
             #print(e)
+    all_totals = []
+    for it in items:
+        all_totals.append(items[it]["total"])
+    items["total_inventory"] = f"${sum(all_totals).round(2)} USD"
             
     #print(x)
 
