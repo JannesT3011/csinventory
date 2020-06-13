@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify, request
 import json
 from urllib.request import urlopen
 from steampy.client import SteamClient
-#from steampy.utils import GameOptions
 from steampy.models import Currency, GameOptions
 import time
 import urllib
@@ -12,7 +11,7 @@ steam_client = SteamClient("D13799E79A69DE038BB9A50AD1703129")
 
 @api.route("/inventory/<steamid>")
 def get_inventory(steamid):
-    #data = request.get_json()
+    #data = request.get_json() # TODO: steamid nicht über paramter übergeben, sondern über body dict
     #steamid = data["steam_id"]
     data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
     json_data = json.loads(data.read())
@@ -25,15 +24,13 @@ def get_inventory(steamid):
         number_inv.append(json_data["rgInventory"][value]["classid"]) # TODO key class id benutzen! nochmal die row json angucken
     for iid in number_inv:
         amount[iid] = number_inv.count(iid)
-    #print(amount)
+    
     for item in inv:
         item_ = item["market_hash_name"]
         try:
             if item_.startswith("Sealed") or item_.startswith("Graffiti") or item_.endswith("Medal") or item_.startswith("Storage") or item_.endswith("Badge"):
                 pass
             else:
-                #items[item_]["amount"] = amount[item["classid"]]
-                #print(item["classid"])
                 steam_info = steam_client.market.fetch_price(item_, GameOptions.CS, currency=Currency.EURO)
                 items[item_] = steam_info # die möglichkeit in euro umzurechnen
                 items[item_]["amount"] = amount[item["classid"]]
@@ -42,13 +39,12 @@ def get_inventory(steamid):
         except:
             print("sleep...")
             time.sleep(60)
-            #print(e)
+            
     all_totals = []
     for it in items:
         all_totals.append(items[it]["total"])
-    items["total_inventory"] = f"${sum(all_totals).round(2)} USD"
-            
-    #print(x)
+    total_inv_value = f"${sum(all_totals)} USD"
+    items["inventory_value"] = total_inv_value
 
     return jsonify(items), 200 # TODO geht!, aber nur x returnen
 
