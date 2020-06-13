@@ -20,3 +20,4 @@ Python:
 - numpy
 - maybe email libary
 - openid for stean login 
+- pyfpdf
