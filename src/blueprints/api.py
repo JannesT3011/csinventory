@@ -9,8 +9,10 @@ import urllib
 api = Blueprint("api", __name__, url_prefix="/api")
 steam_client = SteamClient("D13799E79A69DE038BB9A50AD1703129")
 
-@api.route("/inventory/<steamid>")
-def get_inventory(steamid):
+# INVENTORY ROUTES
+
+@api.route("/inventory/refresh/<steamid>")
+def refresh_inventory(steamid):
     currency = "$"
     # TODO es muss ein Token übergeben werden, der diesen Teil autorisiert, wenn dieser nicht stimmt wird der teil nicht gecallt -> redirect zur db json call route
     # TODO neue Method erstellen die du Uhrzeit checkt und den Programm teil um 0:01 triggert ODER wenn es viele ids in der DB gibt, jede Stunde den programmteil mit einer anderen ID triggert (for loop durch die IDs) -> wenn Prozess fertig: Email an Nutzer.
@@ -68,3 +70,36 @@ def get_inventory(steamid):
     return jsonify(items), 200 
 
     # TODO anuahl bekommt man mit der id eines items (sw-case: 519977179) und dann durch einen loop in rgInventory -> also einmal durch rgInventory loope, werte in einer liste speicher, diese werte zählen und dann den namen rausfinden
+
+@api.route("/inventory")
+def get_inventory():
+    data = request.get_json()
+    steamid = data["steamid"]
+    # call database here and return the json data
+
+@api.route("/inventory/delete")
+def delete_inventory():
+    return
+
+@api.route("/inventory/update") # insert items that in storage boxes (only if you have one in your inv -> ask for it)
+def update_inventory():
+    return
+
+# USER ROUTES
+@api.route("/user")
+def get_user():
+    data = request.get_json()
+    steamkey = data["steamkey"]
+    return
+
+@api.route("/user/update")
+def update_user():
+    return
+
+@api.route("/user/delete")
+def delete_user():
+    return
+
+@api.route("/user/send_mail")
+def send_mail_user():
+    return
