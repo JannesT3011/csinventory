@@ -5,10 +5,12 @@ from steampy.client import SteamClient
 from steampy.models import Currency, GameOptions
 import time
 import urllib
+from ..database import Database
+
 # IMPORTANT; Dieser teil wird nur einmal in der Nacht gecallt und NICHT vom frontend, das frontend callt nur die Datenbank api
 api = Blueprint("api", __name__, url_prefix="/api")
 steam_client = SteamClient("D13799E79A69DE038BB9A50AD1703129")
-
+db = Database()
 # INVENTORY ROUTES
 
 @api.route("/inventory/refresh/<steamid>")
@@ -66,7 +68,7 @@ def refresh_inventory(steamid):
     items["inventory_amount"] = sum(all_amounts)
     items["inventory_value_median"] = f"{currency}{round(total_inv_value, 2)}"
     items["todays_cashout"] = f"{currency}{round(today_cashout, 2)}"
-
+    # TODO add to tb: update if exists, create if not exists
     return jsonify(items), 200 
 
     # TODO anuahl bekommt man mit der id eines items (sw-case: 519977179) und dann durch einen loop in rgInventory -> also einmal durch rgInventory loope, werte in einer liste speicher, diese werte zählen und dann den namen rausfinden
@@ -75,6 +77,7 @@ def refresh_inventory(steamid):
 def get_inventory():
     data = request.get_json()
     steamid = data["steamid"]
+    return jsonify(db.collection.find({"_id": steamid})) # if id not found -> /inventory/refresh
     # call database here and return the json data
 
 @api.route("/inventory/delete")
@@ -103,3 +106,6 @@ def delete_user():
 @api.route("/user/send_mail")
 def send_mail_user():
     return
+
+def get_api_key():
+    return db.collection.find({"_id": "_config"})["api_key"]

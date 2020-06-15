@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+        {{ title }}
+    {% else %}
+        <title>CSINVEST</title>
+    {% endif %}
+</head>
+<body>
+    <div class="search-bar-content">
+        <form action="/inventory"> <!-- send json data to this url die api wird hier nicht gecallt sondern über den route /search/id-->
+            <input type="text" name="search-id" id="search-id" placeholder="Search for SteamID id">
+            <input type="search" name="" id="">
+            <input type="submit" value="Search!"> <!-- TODO: loading screen, wenn noch kein Eintrag in der DB ist -->
+        </form>
+    </div>
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

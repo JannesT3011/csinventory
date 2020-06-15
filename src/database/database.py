@@ -66,7 +66,8 @@ class Database:
         return {
             "_id": steamid,
             "inv": dict,
-            "last_refresh": str
+            "last_refresh": str,
+            "history": dict,
             "created_at": datetime.utcnow()
         }
     
@@ -74,9 +75,10 @@ class Database:
     def user_layout(cls, steamkey) -> dict:
         return {
             "_id": steamkey,
-            "email": str
+            "email": str,
             "name": str,
-            "api_token": str,
+            "steam_api_token": str,
+            "api_key": str,
             "joined_at": datetime.utcnow()
         }
     
@@ -84,5 +86,6 @@ class Database:
     def config_layout(cls) -> dict:
         return {
             "_id": "_config",
-            "api_tokens": list
+            "steam_api_tokens": list,
+            "api_key": dict # name: api_key
         }
