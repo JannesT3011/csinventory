@@ -18,46 +18,49 @@ value: int          total value of inventory
 
 class Database:
     def __init__(self):
-        self.cluster = MongoClient("CONNECTION")
-        self.db = self.cluster["CLUSTER"]
-        self.collection = self.db["DB"]
+        self.cluster = MongoClient(")
+        self.db = self.cluster["CSInvest"]
     
-    def __call__(self):
-        return self.collection
+    def execute(self, collection:str):
+        if collection in ["inventory", "user", "config"]:
+            self.collection = self.db[collection]
+            return self.collection
+        else:
+            return "No collection selected"
 
     def init_inventory_db(self, steamid: str):
         try:
-            return self.collection.insert_one(self.inventory_layout(steamid))
+            return self.execute("inventory").insert_one(self.inventory_layout(steamid))
         except:
-            raise pymongo.errors.DuplicateKeyError("SteamID is already registered")
-
+            #raise pymongo.errors.DuplicateKeyError("SteamID is already registered")
+            raise
     def init_user_db(self, steamkey):
         try:
-            return self.collection.insert_one(self.user_layout(steamkey))
+            return self.execute("user").insert_one(self.user_layout(steamkey))
         except:
             raise pymongo.errors.DuplicateKeyError("Steamkey is already registered")
     
     def init_config_db(self):
         try:
-            return self.collection.insert_one(self.config_layout)
+            return self.execute("config").insert_one(self.config_layout).encode("utf-8")
         except:
             raise pymongo.errors.DuplicateKeyError("Config table already created!")
 
     def delete_inventory_db(self, steamid:str):
         try:
-            return self.collection.delete_one({"_id": steamid})
+            return self.execute("inventory").delete_one({"_id": steamid})
         except:
             raise
 
     def delete_user_db(self, steamkey):
         try:
-            return self.collection.delete_one({"_id": steamkey})
+            return self.execute("user").delete_one({"_id": steamkey})
         except:
             raise
     
     def delete_config_db(self):
         try:
-            return self.collection.delete_one({"_id": "_config"})
+            return self.execute("config").delete_one({"_id": "_config"})
         except:
             raise
     
@@ -65,9 +68,9 @@ class Database:
     def inventory_layout(cls, steamid:str) -> dict:
         return {
             "_id": steamid,
-            "inv": dict,
-            "last_refresh": str,
-            "history": dict,
+            "inv": {},
+            "last_refresh": "",
+            "history": {},
             "created_at": datetime.utcnow()
         }
     
@@ -75,10 +78,10 @@ class Database:
     def user_layout(cls, steamkey) -> dict:
         return {
             "_id": steamkey,
-            "email": str,
-            "name": str,
-            "steam_api_token": str,
-            "api_key": str,
+            "email": "",
+            "name": "",
+            "steam_api_token": "",
+            "api_key": "",
             "joined_at": datetime.utcnow()
         }
     
@@ -86,6 +89,9 @@ class Database:
     def config_layout(cls) -> dict:
         return {
             "_id": "_config",
-            "steam_api_tokens": list,
-            "api_key": dict # name: api_key
+            "steam_api_tokens": [],
+            "api_key": {} # name: api_key
         }
+if __name__ == "__main__":
+    db = Database()
+    db.execute("inventory").update_one({"_id":"123"}, {"$set": {"inv": {"test":"dwdwd"}}})
