@@ -19,3 +19,11 @@ Hello -Name-
 
 - Your Today cashout-TOTAL VALUE-                           
                                         Unterschrift    
+
+# NEW IDEA:
+- browser extension JAVASCRIPT
+- python script for inventory is called at midnight by schedule server -> push to db
+- js ext load data from db
+- add buy prices to table
+- sell items, draw graphes (inv history)
+- check prices for item on different sites (api) -> if you are on a site from an item
