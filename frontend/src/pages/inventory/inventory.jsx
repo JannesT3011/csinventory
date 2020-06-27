@@ -1,13 +1,25 @@
 import React from "react"
 import Navbar from "../../components/navbar/navbar"
 import "./inventory.scss"
+import InvBar from "../../components/invNavBar/invNavbar"
+import Loading from "../../components/loading/loading"
 
 class Inventory extends React.Component {
     state = {
         items: null,
         elements:null,
         today_cashout: null,
-        inv_amount: null
+        inv_amount: null,
+        loading: false
+    }
+
+    updateInventory = async() => {
+        this.setState({loading: true})
+        const url = "/api/inventory/refresh/76561198439884801"
+        const response = await fetch(url)
+        const data = await response.json()
+        this.setState({loading: false})
+        window.location.reload()
     }
 
     async componentDidMount() {
@@ -45,6 +57,9 @@ class Inventory extends React.Component {
         return (
             <div className="Inventory">
                 <Navbar/>
+                <InvBar/>
+                {this.state.loading ? <Loading/> : null}
+                <button onClick={this.updateInventory}>Update!</button>
                 {this.state.inv_amount}
                 {this.state.today_cashout}
                 <h1>Inventory</h1>
