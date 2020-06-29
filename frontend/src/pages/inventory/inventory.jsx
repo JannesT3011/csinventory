@@ -4,6 +4,8 @@ import "./inventory.scss"
 import InvBar from "../../components/invNavBar/invNavbar"
 import Loading from "../../components/loading/loading"
 
+import Spinner from "react-bootstrap/Spinner"
+
 class Inventory extends React.Component {
     state = {
         items: null,
@@ -22,7 +24,7 @@ class Inventory extends React.Component {
         window.location.reload()
     }
 
-    async componentDidMount() {
+    async componentDidMount() { // hier auch loading screen machen
         const url = "/api/inventory"
         const response = await fetch(url, {
             method: "POST",
@@ -38,7 +40,8 @@ class Inventory extends React.Component {
             if ( !(item==="inventory_amount") && !(item==="inventory_value_median") && !(item==="todays_cashout")) {
                 elements.push(
                     <div className="items">
-                        <h1>{item}</h1>
+                        <h3>{item}</h3>
+                        <hr/>
                         <h3>Amount: {data[item]['amount']}</h3>
                         <h3>lowest price:{data[item]["lowest_price"]}</h3>
                         <h3>totalcashout:{data[item]["total_cashout"]}</h3>
@@ -58,11 +61,12 @@ class Inventory extends React.Component {
             <div className="Inventory">
                 <Navbar/>
                 <InvBar/>
-                {this.state.loading ? <Loading/> : null}
                 <button onClick={this.updateInventory}>Update!</button>
+                {this.state.loading ? <Loading/> : null}
                 {this.state.inv_amount}
                 {this.state.today_cashout}
                 <h1>Inventory</h1>
+                <Spinner animation="border" />
                 {this.state.elements}
             </div>
         )
