@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="static/inventory.css">
+{% extends "layout.html" %}
+{% block content %}
+<h2>Inventory amount: {{ inventory_amount }}</h2>
+<h2>Today Cashout: {{ today_cashout }}</h2>
+<form action={{url}} method="post"><!--TODO wenn refresh muss man auf richtige seite weitergelitet werden, send json data with param update: true -->
+    <button>Refresh</button> <!-- seite nur neu laden, aber parameter update true setzen-->
+</form>
+{% for item in items %}
+<div class="item-data">
+    <h1>Name: {{ item.name }}</h1>
+    <h3>Amount: {{ item.data.amount }}</h3>
+    <h3>Lowest Price: {{ item.data.lowest_price }}</h3>
+    <h3>Median Price: {{ item.data.median_price }}</h3>
+    <h3>Cashout: {{ item.data.total_cashout }}</h3>
+    <h3>Total Median{{ item.data.total_median }}</h3>
+</div>
+{% endfor %}
+<!-- TODO: Graph mit den der den Vlerauf des total cashout azeigt -->
+{% endblock content %}

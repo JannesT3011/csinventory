@@ -1,0 +1,18 @@
+{
+    "manifest_version": 2,
+    "name": "CS-Invest",
+    "description": "Browser Extension for your csgo investments",
+    "version": "0.0.1",
+    "author": "Bmbus",
+    "homepage_url": "https://github.com/Bmbus/csinvest",
+    "icons": {
+        "48": ""
+    },
+    "content-scripts": [
+        {
+            "matches": [""],
+            "js": [""]
+        }
+    ]
+
+}

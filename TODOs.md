@@ -27,3 +27,5 @@ Hello -Name-
 - add buy prices to table
 - sell items, draw graphes (inv history)
 - check prices for item on different sites (api) -> if you are on a site from an item
+- rechtclick auf item um es zur beobachtungsliste hinzuzufügen oder als kauf speichern (only steam market -> more soon)
+- inventory value anzeigen und den am vor tag
