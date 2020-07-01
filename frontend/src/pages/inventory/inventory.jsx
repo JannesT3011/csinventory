@@ -58,7 +58,7 @@ class Inventory extends React.Component {
 
     render() {
         return (
-            <div className="Inventory">
+            <section className="Inventory">
                 <Navbar/>
                 <InvBar/>
                 <button onClick={this.updateInventory}>Update!</button>
@@ -66,9 +66,10 @@ class Inventory extends React.Component {
                 {this.state.inv_amount}
                 {this.state.today_cashout}
                 <h1>Inventory</h1>
-                <Spinner animation="border" />
-                {this.state.elements}
-            </div>
+                <div className="item-grid">
+                    {this.state.elements}
+                </div>
+            </section>
         )
     }
 }
