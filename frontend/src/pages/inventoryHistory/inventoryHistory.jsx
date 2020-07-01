@@ -20,7 +20,6 @@ class InventoryHistory extends React.Component {
         this.setState({history: data})
         let dates = []
         Object.keys(data).map((date) => {
-            console.log(date)
             dates.push(
                 <option value={date}>{date}</option>
             )
@@ -43,6 +42,9 @@ class InventoryHistory extends React.Component {
                         {this.state.dates}
                     </select>
                 </form>
+                <div className="item-grid">
+
+                </div>
             </div>
         )
     } // TODO display items on selectet date -> this.state.history.date

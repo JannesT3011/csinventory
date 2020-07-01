@@ -1,11 +1,12 @@
 import React from "react"
 import "./loading.scss"
-import * as Rb from "react-bootstrap"
 
 class Loading extends React.Component {
-    render() {
+    render() { 
         return(
-            <Rb.Spinner animation="border"/>
+            <button className="update">
+                <i className="fa fa-spinner fa-spin"></i> Updating...
+            </button>
         )
     }
 }

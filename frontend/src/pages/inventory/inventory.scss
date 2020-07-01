@@ -1,20 +1,22 @@
+$div_color: #353535;
+
 html, body {
     height: 100%;
     width: auto;
 }
 
-.item-grid {
+.item-grid, .output-grid {
     display: grid;
     gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
 }
 
-.items {
+.items, .output-total {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: #353535;
+    background: $div_color;
     font-size: 12px;
     color: #fff;
     box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
@@ -27,4 +29,20 @@ html, body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+hr {
+    color: #fff;
+    width: 20px;
+}
+
+.update {
+    color: $div_color;
+    background-color: #fff;
+    border: 1px solid black;
+    height: 30px;
+    width: 150px;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 13px;
 }

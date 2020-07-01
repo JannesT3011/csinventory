@@ -4,8 +4,6 @@ import "./inventory.scss"
 import InvBar from "../../components/invNavBar/invNavbar"
 import Loading from "../../components/loading/loading"
 
-import Spinner from "react-bootstrap/Spinner"
-
 class Inventory extends React.Component {
     state = {
         items: null,
@@ -19,7 +17,7 @@ class Inventory extends React.Component {
         this.setState({loading: true})
         const url = "/api/inventory/refresh/76561198439884801"
         const response = await fetch(url)
-        const data = await response.json()
+        //const data = await response.json()
         this.setState({loading: false})
         window.location.reload()
     }
@@ -55,17 +53,30 @@ class Inventory extends React.Component {
         this.setState({elements:elements, today_cashout:data["todays_cashout"], inv_amount: data["inventory_amount"]})
         setInterval(response, 5000)
     }
-
-    render() {
+    // {this.state.loading ? <Loading/> : <button onClick={this.updateInventory} className="update">Update!</button>} <br/> <br/> 
+    render() { // TODO loading_button: if not loaded show normal button (statt null), if loaded show loading button
         return (
             <section className="Inventory">
                 <Navbar/>
+                <br/>
                 <InvBar/>
-                <button onClick={this.updateInventory}>Update!</button>
-                {this.state.loading ? <Loading/> : null}
-                {this.state.inv_amount}
-                {this.state.today_cashout}
-                <h1>Inventory</h1>
+                <div align="center">
+                    <h1>Your Inventory:</h1>
+                </div>
+                <div className="updater" align="center">
+                    {this.state.loading ? <Loading/> : <button onClick={this.updateInventory} className="update">Update!</button>} <br/> <br/>
+                </div>
+                <div className="output-grid">
+                    <div className="output-total" align="center">
+                        Total Inventory Amount: <br/>
+                        {this.state.inv_amount}
+                    </div>
+                    <div className="output-total" align="center">
+                        Todays Cashout: <br/>
+                        {this.state.today_cashout}
+                    </div>
+                </div>
+                <br/>
                 <div className="item-grid">
                     {this.state.elements}
                 </div>

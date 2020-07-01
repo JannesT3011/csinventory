@@ -1,0 +1,17 @@
+$div_color: #353535;
+
+.InvNavbar {
+    overflow: hidden;
+}
+
+.inv-nav {
+    border: 1px solid black;
+    text-decoration: none;
+    color: #fff;
+    background-color: $div_color;
+    border-radius: 4px;
+    margin: 5px;
+    height: 20px;
+    display: inline-block;
+    width: 130px;
+}
