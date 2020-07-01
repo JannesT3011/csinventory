@@ -22,7 +22,10 @@ class Inventory extends React.Component {
         window.location.reload()
     }
 
-    async componentDidMount() { // hier auch loading screen machen
+    async componentDidMount() { // change color of inventory button (invNav)
+        var element = document.getElementById("inventory-point")
+        element.style.backgroundColor = "#fff"
+        element.style.color = "#353535"
         const url = "/api/inventory"
         const response = await fetch(url, {
             method: "POST",
