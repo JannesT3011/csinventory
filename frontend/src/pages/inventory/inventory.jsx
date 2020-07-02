@@ -10,19 +10,20 @@ class Inventory extends React.Component {
         elements:null,
         today_cashout: null,
         inv_amount: null,
-        loading: false
+        loading: false,
     }
 
     updateInventory = async() => {
         this.setState({loading: true})
-        const url = "/api/inventory/refresh/76561198439884801"
+        const url = "/api/inventory/refresh/" + this.props.match.params.steamid
         const response = await fetch(url)
         //const data = await response.json()
         this.setState({loading: false})
         window.location.reload()
     }
 
-    async componentDidMount() { // change color of inventory button (invNav)
+    async componentDidMount() { 
+        this.setState({loading: true})
         var element = document.getElementById("inventory-point")
         element.style.backgroundColor = "#fff"
         element.style.color = "#353535"
@@ -30,7 +31,7 @@ class Inventory extends React.Component {
         const response = await fetch(url, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({"steamid": "76561198439884801", "update": false})
+            body: JSON.stringify({"steamid": this.props.match.params.steamid, "update": false})
         })
         const data = await response.json()
         console.log(data)
@@ -53,18 +54,18 @@ class Inventory extends React.Component {
         })
         
 
-        this.setState({elements:elements, today_cashout:data["todays_cashout"], inv_amount: data["inventory_amount"]})
+        this.setState({elements:elements, today_cashout:data["todays_cashout"], inv_amount: data["inventory_amount"], loading: false})
         setInterval(response, 5000)
     }
     // {this.state.loading ? <Loading/> : <button onClick={this.updateInventory} className="update">Update!</button>} <br/> <br/> 
     render() { // TODO loading_button: if not loaded show normal button (statt null), if loaded show loading button
         return (
             <section className="Inventory">
-                <Navbar/>
+                <Navbar title="Inventory"/>
                 <br/>
-                <InvBar/>
+                <InvBar steamid={this.props.match.params.steamid}/>
                 <div align="center">
-                    <h1>Your Inventory:</h1>
+                    <strong><h1>Your Inventory:</h1></strong>
                 </div>
                 <div className="updater" align="center">
                     {this.state.loading ? <Loading/> : <button onClick={this.updateInventory} className="update">Update!</button>} <br/> <br/>
@@ -81,7 +82,7 @@ class Inventory extends React.Component {
                 </div>
                 <br/>
                 <div className="item-grid">
-                    {this.state.elements}
+                    {this.state.loading ? null : this.state.elements}
                 </div>
             </section>
         )

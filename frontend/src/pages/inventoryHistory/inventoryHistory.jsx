@@ -5,15 +5,20 @@ import InvBar from "../../components/invNavBar/invNavbar"
 class InventoryHistory extends React.Component {
     state = {
         history: null,
-        dates: null
+        dates: null,
+        loading: false
     }
 
     async componentDidMount() {
+        this.setState({loading: true})
+        var element = document.getElementById("history-point")
+        element.style.backgroundColor = "#fff"
+        element.style.color = "#353535"
         const url = "/api/inventory/history"
         const response = await fetch(url, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({"steamid": "76561198439884801"})
+            body: JSON.stringify({"steamid": this.props.match.params.steamid})
         })
         const data = await response.json()
         console.log(data)
@@ -34,8 +39,8 @@ class InventoryHistory extends React.Component {
     render() {
         return(
             <div className="inventoryHistory">
-                <Navbar/>
-                <InvBar/>
+                <Navbar title="History"/>
+                <InvBar steamid={this.props.match.params.steamid}/>
                 <h1>InventoryHistory</h1>
                 <form action="">
                     <select name="" id="">
@@ -43,8 +48,8 @@ class InventoryHistory extends React.Component {
                     </select>
                 </form>
                 <div className="item-grid">
-
                 </div>
+                <h1>{this.props.match.params.steamid}</h1>
             </div>
         )
     } // TODO display items on selectet date -> this.state.history.date

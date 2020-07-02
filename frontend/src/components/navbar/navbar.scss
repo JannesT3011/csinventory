@@ -1,13 +1,24 @@
-$navbar_color: #0097A7;
+$navbar_color: #353535;
 $background_color: #607D8B;
 
 .Navbar {
-    height: 50px;
-    margin-top: 0px;
-    background-color: $navbar_color
+    padding: 1px;
+    background-color: $navbar_color;
+    text-align: center;
 }
 
-.steamlogin-img{
+/*.steamlogin-img{
     float: right;
     margin-top: 5px;
+}
+
+.nav-points a{
+    color: #fff;
+    text-decoration: none;
+} */
+
+.title {
+    color: white;
+    font-weight: bold;
+    font-family: 'Anton', sans-serif;
 }

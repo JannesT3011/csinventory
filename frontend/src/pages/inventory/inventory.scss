@@ -17,7 +17,7 @@ html, body {
     justify-content: center;
     align-items: center;
     background: $div_color;
-    font-size: 12px;
+    font-size: 13px;
     color: #fff;
     box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
     height: 100%;
@@ -29,6 +29,11 @@ html, body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.output-total {
+    font-weight: bold;
+    font-size: 14px;
 }
 
 hr {

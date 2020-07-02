@@ -6,11 +6,10 @@ class Home extends React.Component {
     render() {
         return (
             <div className="Home">
-                <Navbar/> 
                 <div className="welcome-text" align="center">
                     <h1>CS Invest</h1>
                     <h3>The place for your CS Investments</h3>
-                    <a href="/inventory"><button>Start!</button></a>
+                    <a href="/inventory/76561198439884801"><button>Start!</button></a>
                 </div>
             </div>
         )

@@ -12,12 +12,15 @@ class InventoryStats extends React.Component {
     }
 
     async componentDidMount() {
+        var element = document.getElementById("stats-point")
+        element.style.backgroundColor = "#fff"
+        element.style.color = "#353535"
         this.setState({loading: true})
         const url = "/api/inventory/stats"
         const response = await fetch(url, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({"steamid": "76561198439884801"})
+            body: JSON.stringify({"steamid": this.props.match.params.steamid})
         })
         const data = await response.json()
         let x_data = []
@@ -32,8 +35,8 @@ class InventoryStats extends React.Component {
     render() {
         return(
             <div className="inventoryStats">
-                <Navbar/>
-                <InvBar/>
+                <Navbar title="Stats"/>
+                <InvBar steamid={this.props.match.params.steamid}/>
                 <Plot
                     data={[
                         {
