@@ -6,7 +6,11 @@ class InventoryHistory extends React.Component {
     state = {
         history: null,
         dates: null,
-        loading: false
+        loading: false,
+        elements: null,
+        selected_date: null,
+        today_cashout: null,
+        inv_amount: null
     }
 
     async componentDidMount() {
@@ -21,19 +25,56 @@ class InventoryHistory extends React.Component {
             body: JSON.stringify({"steamid": this.props.match.params.steamid})
         })
         const data = await response.json()
-        console.log(data)
         this.setState({history: data})
         let dates = []
+        let all_dates = []
+        let elements = []
         Object.keys(data).map((date) => {
+            all_dates.push(date)
             dates.push(
                 <option value={date}>{date}</option>
             )
         })
-        this.setState({dates: dates})
+        const _data = data[all_dates[0]]
+        Object.keys(_data).map((item) => {
+            if ( !(item==="inventory_amount") && !(item==="inventory_value_median") && !(item==="todays_cashout")) {
+                elements.push(
+                    <div className="items">
+                        <h3>{item}</h3>
+                        <hr/>
+                        <h3>Amount: {_data[item]['amount']}</h3>
+                        <h3>lowest price:{_data[item]["lowest_price"]}</h3>
+                        <h3>totalcashout:{_data[item]["total_cashout"]}</h3>
+                        <h3>Median Price:{_data[item]["median_price"]}</h3>
+                    </div>
+                )
+            }
+        })
+
+        this.setState({dates: dates, elements: elements,today_cashout:_data["todays_cashout"], inv_amount: _data["inventory_amount"] ,loading: false})
+        return
     }
 
-    getInvOnDate = async() => {
-        const url = "/api/inventory/history/date"
+    handleChange = (event) => {
+        this.setState({selected_date: event.target.value, loading: true})
+        let elements = []
+        var data = this.state.history[event.target.value]
+        Object.keys(data).map((item) => {
+            if ( !(item==="inventory_amount") && !(item==="inventory_value_median") && !(item==="todays_cashout")) {
+                elements.push(
+                    <div className="items">
+                        <h3>{item}</h3>
+                        <hr/>
+                        <h3>Amount: {data[item]['amount']}</h3>
+                        <h3>lowest price:{data[item]["lowest_price"]}</h3>
+                        <h3>totalcashout:{data[item]["total_cashout"]}</h3>
+                        <h3>Median Price:{data[item]["median_price"]}</h3>
+                    </div>
+                )
+            }
+        })
+        this.setState({elements: elements, today_cashout:data["todays_cashout"], inv_amount: data["inventory_amount"], loading: false})
+        return
     }
 
     render() {
@@ -41,15 +82,24 @@ class InventoryHistory extends React.Component {
             <div className="inventoryHistory">
                 <Navbar title="History"/>
                 <InvBar steamid={this.props.match.params.steamid}/>
-                <h1>InventoryHistory</h1>
-                <form action="">
-                    <select name="" id="">
-                        {this.state.dates}
-                    </select>
-                </form>
-                <div className="item-grid">
+                <select name="" id="" onChange={this.handleChange}>
+                    {this.state.dates}
+                </select>
+                <br/> <br/>
+                <div className="output-grid">
+                    <div className="output-total" align="center">
+                        Total Inventory Amount: <br/>
+                        {this.state.inv_amount}
+                    </div>
+                    <div className="output-total" align="center">
+                        Todays Cashout: <br/>
+                        {this.state.today_cashout}
+                    </div>
                 </div>
-                <h1>{this.props.match.params.steamid}</h1>
+                <br/>
+                <div className="item-grid">
+                    {this.state.elements}
+                </div>
             </div>
         )
     } // TODO display items on selectet date -> this.state.history.date

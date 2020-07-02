@@ -64,9 +64,7 @@ class Inventory extends React.Component {
                 <Navbar title="Inventory"/>
                 <br/>
                 <InvBar steamid={this.props.match.params.steamid}/>
-                <div align="center">
-                    <strong><h1>Your Inventory:</h1></strong>
-                </div>
+                <br/>
                 <div className="updater" align="center">
                     {this.state.loading ? <Loading/> : <button onClick={this.updateInventory} className="update">Update!</button>} <br/> <br/>
                 </div>
