@@ -9,10 +9,14 @@ from ..database import Database
 import pymongo
 from datetime import datetime
 from ..utils.current_time import current
+import json
+
+with open("config.json") as cf:
+    config = json.load(cf)
 
 # IMPORTANT; Dieser teil wird nur einmal in der Nacht gecallt und NICHT vom frontend, das frontend callt nur die Datenbank api
 api = Blueprint("api", __name__, url_prefix="/api")
-steam_client = SteamClient("D13799E79A69DE038BB9A50AD1703129")
+steam_client = SteamClient(config["steam_apikey"])
 db = Database()
 # INVENTORY ROUTES
 
@@ -28,7 +32,10 @@ def refresh_inventory(steamid) -> jsonify:
     #data = request.get_json() # TODO: steamid nicht über paramter übergeben, sondern über body dict
     #steamid = data["steam_id"]
     #currence = data["currency"]
-    data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
+    try:
+        data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
+    except:
+        time.sleep(60)
     json_data = json.loads(data.read())
     descriptions = json_data['rgDescriptions']
     inv =  [descriptions[v] for v in descriptions]
@@ -126,7 +133,6 @@ def history_inventory() -> jsonify:
     steamid = data["steamid"]
     try:
         result = db.execute("inventory").find_one({"_id":steamid})
-        print(result["history"])
         return jsonify(result["history"]),200
     except:
         raise
@@ -153,7 +159,6 @@ def inventory_stats():
 # USER ROUTES
 @api.route("/user", methods=["POST"])
 def get_user() -> jsonify:
-    print(request.get_json())
     data = request.get_json()
     steamkey = data["steamkey"]
     return steamkey
