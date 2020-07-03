@@ -1,5 +1,6 @@
 {
     "steamid": "",
+    "steam_apikey": "",
     "mongodb_link": "",
     "cluster": "CSInvest",
     "inventory_db_name": "inventory",
