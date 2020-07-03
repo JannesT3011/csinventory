@@ -29,26 +29,31 @@ class InventoryStats extends React.Component {
             x_data.push(x)
             y_data.push(parseFloat(data[x]["todays_cashout"].split("$")[1]))
         })
-        console.log(y_data)
-        this.setState({loading: false, x: x_data})
+    
+        this.setState({loading: false, x: x_data, y: y_data})
+        console.log(this.state.y)
+        console.log(this.state.x)
     }
     render() {
         return(
             <div className="inventoryStats">
                 <Navbar title="Stats"/>
                 <InvBar steamid={this.props.match.params.steamid}/>
+                <br/>
+                <div align="center">
                 <Plot
                     data={[
                         {
                             x: this.state.x,
                             y: this.state.y,
                             type: "scatter",
-                            mode: "lines",
-                            marker: {color: "red"},
+                            marker: {color: "red"}
                         }
                     ]}
-                    layout={{width: 800, height: 740, title: 'Inventory Stats'}}
-                />
+                    layout={{title: "Inventory Stats", autosize:true}}
+                    config={{responsive: true}}
+                    />
+                </div>
             </div>
         )
     }
