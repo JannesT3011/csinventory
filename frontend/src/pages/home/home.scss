@@ -6,23 +6,26 @@ html, body {
     background-color: $background_color;
 }
 
-.loader {
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid #3498db;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
-    animation: spin 2s linear infinite;
+.warn-msg {
+  color: #F44336;
+  font-size: 11px;
+  font-weight: bold;
 }
 
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+.search-form input{
+  border-radius: 4px;
+  background-color: #fff;
+  color: #353535;
+  width: 250px;
+  font-weight: bold;
+  height: 30px;
+  border: none;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.search-form button {
+  height: 32px;
+  border-radius: 4px;
+  margin-left: 3px;
+  border: none;
+  width: 35px;
 }

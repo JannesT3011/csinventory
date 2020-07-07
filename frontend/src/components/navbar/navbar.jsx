@@ -1,16 +1,35 @@
 import React from "react"
 import "./navbar.scss"
+import {Link} from "react-router-dom"
 
-class Navbar extends React.Component { // TODO: 
+class Navbar extends React.Component {
+    state = {
+        url: "/",
+        warn: false,
+        steamid: null
+    }
+
+    handleChange = (event) => {
+        const steamid = event.target.value
+        const url = `/inventory/${steamid}`
+        this.setState({steamid: steamid, url: url})
+    }
+
     render() {
         return(
-            <header className="Navbar">
-                <div className="title">
-                <h1>{this.props.title}</h1>
+            <div className="topnav">
+                <a href="/" className="active" className="to-home">Home</a>
+                <div className="search-container">
+                    <form onChange={this.handleChange}>
+                        <input type="text" placeholder="SteamID.."/>
+                        <Link to={this.state.url}>
+                            <button type="submit"><i className="fa fa-search"></i></button>
+                        </Link>
+                    </form>
                 </div>
-            </header>
+            </div>
         )
-    }
+    }   
 }
 
 export default Navbar
