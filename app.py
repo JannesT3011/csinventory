@@ -1,6 +1,6 @@
 from flask import Flask
-from src.blueprints.api import api
-from src.blueprints.error import error
+from api.blueprints.api import api
+from api.blueprints.error import error
 import requests
 
 app = Flask(__name__)

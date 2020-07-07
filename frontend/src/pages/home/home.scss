@@ -2,8 +2,9 @@ $background_color: #607D8B;
 
 html, body {
     height: 100%;
-    width: auto;
+    margin: 0;
     background-color: $background_color;
+    overflow: hidden;
 }
 
 .warn-msg {
