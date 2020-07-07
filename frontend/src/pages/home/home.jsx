@@ -28,8 +28,10 @@ class Home extends React.Component {
         return (
             <div className="Home">
                 <div className="welcome-text" align="center">
+                    <div className="intro">
                     <h1>CS Inventory</h1>
                     <h3>The place for CS Inventorys</h3>
+                    </div>
                     <form onChange={this.handleSubmit} className="search-form">
                         <input type="text" name="input_steamid" id="input_steamid" placeholder="Steamid..."  id="search"/>
                         {this.state.warn ? <p className="warn-msg">Please enter steamid</p> : null}
