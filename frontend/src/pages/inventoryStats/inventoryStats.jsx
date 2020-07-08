@@ -37,7 +37,7 @@ class InventoryStats extends React.Component {
     render() {
         return(
             <div className="inventoryStats">
-                <Navbar title="Stats"/>
+                <Navbar title="Stats" steamid={this.props.match.params.steamid}/>
                 <InvBar steamid={this.props.match.params.steamid}/>
                 <br/>
                 <div align="center">

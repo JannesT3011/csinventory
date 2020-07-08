@@ -59,7 +59,7 @@ class Inventory extends React.Component {
     render() { 
         return (
             <section className="Inventory">
-                <Navbar title="Inventory"/>
+                <Navbar title="Inventory" steamid={this.props.match.params.steamid}/>
                 <br/>
                 <InvBar steamid={this.props.match.params.steamid}/>
                 <br/>

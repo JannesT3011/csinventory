@@ -10,6 +10,10 @@ class Navbar extends React.Component {
         redirect: false
     }
 
+    componentDidMount() {
+        this.setState({url: `/inventory/${this.props.steamid}`})
+    }
+
     handleChange = (event) => {
         const steamid = event.target.value
         if (steamid == "" || steamid == null) {this.setState({url: `/`, steamid:null})} else {

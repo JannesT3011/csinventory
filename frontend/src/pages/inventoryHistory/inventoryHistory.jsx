@@ -80,7 +80,7 @@ class InventoryHistory extends React.Component {
     render() {
         return(
             <div className="inventoryHistory">
-                <Navbar title="History"/>
+                <Navbar title="History" steamid={this.props.match.params.steamid}/>
                 <InvBar steamid={this.props.match.params.steamid}/>
                 <select name="" id="" onChange={this.handleChange}>
                     {this.state.dates}
