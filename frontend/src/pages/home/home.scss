@@ -4,7 +4,11 @@ html, body {
     height: 100%;
     margin: 0;
     background-color: $background_color;
-    overflow: hidden;
+    /*overflow: hidden; */
+}
+
+.Home {
+  overflow: hidden;
 }
 
 .warn-msg {

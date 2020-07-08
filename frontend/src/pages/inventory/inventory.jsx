@@ -34,7 +34,6 @@ class Inventory extends React.Component {
             body: JSON.stringify({"steamid": this.props.match.params.steamid, "update": false})
         })
         const data = await response.json()
-        console.log(data)
         this.setState({items: data})
         let elements = []
 
@@ -44,7 +43,7 @@ class Inventory extends React.Component {
                     <div className="items">
                         <h3>{item}</h3>
                         <hr/>
-                        <h3>Amount: {data[item]['amount']}</h3>
+                        <h3>Amount: {data[item]["amount"]}</h3>
                         <h3>lowest price:{data[item]["lowest_price"]}</h3>
                         <h3>totalcashout:{data[item]["total_cashout"]}</h3>
                         <h3>Median Price:{data[item]["median_price"]}</h3>
@@ -52,13 +51,12 @@ class Inventory extends React.Component {
                 )
             }
         })
-        
 
         this.setState({elements:elements, today_cashout:data["todays_cashout"], inv_amount: data["inventory_amount"], loading: false})
         setInterval(response, 5000)
     }
-    // {this.state.loading ? <Loading/> : <button onClick={this.updateInventory} className="update">Update!</button>} <br/> <br/> 
-    render() { // TODO loading_button: if not loaded show normal button (statt null), if loaded show loading button
+    
+    render() { 
         return (
             <section className="Inventory">
                 <Navbar title="Inventory"/>

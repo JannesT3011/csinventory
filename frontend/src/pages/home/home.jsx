@@ -10,14 +10,16 @@ class Home extends React.Component {
         steamid: null
     }
 
-    handleSubmit = (event) => {
+    handleChange = (event) => {
         const steamid = event.target.value
-        const url = `/inventory/${steamid}`
-        this.setState({url: url, steamid: steamid})
+        if (steamid == "" || steamid == null) {this.setState({steamid:null, url: "/"})} else { 
+            const url = `/inventory/${steamid}`
+            this.setState({url: url, steamid: steamid})
+        }
     }
 
     checkState = () => {
-        if (this.state.url === "/")  {
+        if (this.state.steamid == null)  {
             const element = document.getElementById("search")
             this.setState({warn: true})
             element.style.border = "1px solid red"
@@ -32,7 +34,7 @@ class Home extends React.Component {
                     <h1>CS Inventory</h1>
                     <h3>The place for CS Inventorys</h3>
                     </div>
-                    <form onChange={this.handleSubmit} className="search-form">
+                    <form onChange={this.handleChange} className="search-form">
                         <input type="text" name="input_steamid" id="input_steamid" placeholder="Steamid..."  id="search"/>
                         {this.state.warn ? <p className="warn-msg">Please enter steamid</p> : null}
                         <Link to={this.state.url}>
