@@ -1,14 +1,14 @@
 import React from "react"
 import Navbar from "../../components/navbar/navbar"
 import InvBar from "../../components/invNavBar/invNavbar"
-import Plotly from "react-plotly.js"
-import Plot from "react-plotly.js"
+import {Line} from "react-chartjs-2"
+import { Redirect } from "react-router-dom"
 
 class InventoryStats extends React.Component {
     state = {
         x: null,
         y: null, 
-        loading: false
+        loading: false,
     }
 
     async componentDidMount() {
@@ -29,10 +29,8 @@ class InventoryStats extends React.Component {
             x_data.push(x)
             y_data.push(parseFloat(data[x]["todays_cashout"].split("$")[1]))
         })
-    
+        console.log(y_data)
         this.setState({loading: false, x: x_data, y: y_data})
-        console.log(this.state.y)
-        console.log(this.state.x)
     }
     render() {
         return(
@@ -40,18 +38,16 @@ class InventoryStats extends React.Component {
                 <Navbar title="Stats" steamid={this.props.match.params.steamid}/>
                 <InvBar steamid={this.props.match.params.steamid}/>
                 <br/>
-                <div align="center">
-                <Plot
-                    data={[
-                        {
-                            x: this.state.x,
-                            y: this.state.y,
-                            type: "scatter",
-                            marker: {color: "red"}
-                        }
-                    ]}
-                    layout={{title: "Inventory Stats", autosize:true}}
-                    config={{responsive: true}}
+                <div align="center" className="chart">
+                    <Line
+                        data={{
+                            labels: this.state.x,
+                            datasets: [{
+                                label:"Value",
+                                data: this.state.y
+                            }],
+                            borderColor: '#c54964',
+                        }}
                     />
                 </div>
             </div>
