@@ -8,4 +8,9 @@ app.register_blueprint(api)
 app.register_blueprint(error)
 
 if __name__ == "__main__":
-	app.run(port=8080, debug=True, threaded=True)
+	try:
+		print("Starting api..")
+		app.run(port=8080, debug=True, threaded=True)
+	except KeyboardInterrupt:
+		print("Api stopped!")
+		pass

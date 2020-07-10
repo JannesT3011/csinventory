@@ -31,11 +31,14 @@ def refresh_inventory(steamid) -> jsonify:
     # TODO: check currency: if currency = EURO: currency=€
     #data = request.get_json() # TODO: steamid nicht über paramter übergeben, sondern über body dict
     #steamid = data["steam_id"]
-    #currence = data["currency"]
+    #currence = data["currency"] 
+    # TODO es wird nicht jedes item gezählt (es werden welche ausgelassen) -> neu testen
     try:
         data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
     except:
         time.sleep(60)
+        refresh_inventory(steamid)
+
     json_data = json.loads(data.read())
     descriptions = json_data['rgDescriptions']
     inv =  [descriptions[v] for v in descriptions]
@@ -62,8 +65,7 @@ def refresh_inventory(steamid) -> jsonify:
                 items[item_]["total_median"] = f'${round(items[item_]["amount"] * float(steam_info["median_price"].split(" USD")[0].split("$")[1]), 2)}'
                 items[item_]["total_cashout"] = f'${round(items[item_]["amount"] * float(steam_info["lowest_price"].split(" USD")[0].split("$")[1]), 2)}'
                 items[item_]["buy_price"] = "0"
-                items[item_]["total_buy_price"] = "0    "
-                # TODO items dict in db speichern, dieser wird nur einmal am Tag gerefresht
+                items[item_]["total_buy_price"] = "0"
         except:
             time.sleep(60)
             
@@ -125,7 +127,14 @@ def get_inventory():
 
 @api.route("/inventory/delete")
 def delete_inventory() -> jsonify:
-    return
+    data = request.get_json()
+    steamid = data["steamid"]
+    try:
+        db.execute("inventory").delete_one({"_id":steamid})
+    except:
+        return jsonify({"msg": "Error"}), 400
+    
+    return jsonify({"msg": f"{steamid} deleted!"}), 200
 
 @api.route("/inventory/history", methods=["POST"])
 def history_inventory() -> jsonify:

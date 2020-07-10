@@ -17,7 +17,6 @@ class Inventory extends React.Component {
         this.setState({loading: true})
         const url = "/api/inventory/refresh/" + this.props.match.params.steamid
         const response = await fetch(url)
-        //const data = await response.json()
         this.setState({loading: false})
         window.location.reload()
     }
