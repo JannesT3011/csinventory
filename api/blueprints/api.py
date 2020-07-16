@@ -10,6 +10,7 @@ import pymongo
 from datetime import datetime
 from ..utils.current_time import current
 import json
+from csinventorypy import CSInventory
 
 with open("config.json") as cf:
     config = json.load(cf)
@@ -32,51 +33,21 @@ def refresh_inventory(steamid) -> jsonify:
     #data = request.get_json() # TODO: steamid nicht über paramter übergeben, sondern über body dict
     #steamid = data["steam_id"]
     #currence = data["currency"] 
-    # TODO es wird nicht jedes item gezählt (es werden welche ausgelassen) -> neu testen
-    try:
-        data = urlopen('http://steamcommunity.com/profiles/'+steamid+'/inventory/json/730/2')
-    except:
-        time.sleep(60)
-        refresh_inventory(steamid)
 
-    json_data = json.loads(data.read())
-    descriptions = json_data['rgDescriptions']
-    inv =  [descriptions[v] for v in descriptions]
+    items = CSInventory(steamid).get_inv_steamdata(config["steam_apikey"], False)
 
-    items = {}
-    number_inv = []
-    amount = {}
-
-    for value in json_data["rgInventory"]:
-        number_inv.append(json_data["rgInventory"][value]["classid"]) # TODO key class id benutzen! nochmal die row json angucken
-    
-    for iid in number_inv:
-        amount[iid] = number_inv.count(iid)
-    
-    for item in inv:
-        item_ = item["market_hash_name"]
-        try:
-            if item_.startswith("Sealed") or item_.startswith("Graffiti") or item_.endswith("Medal") or item_.startswith("Storage") or item_.endswith("Badge"):
-                pass
-            else:
-                steam_info = steam_client.market.fetch_price(item_, GameOptions.CS) #TODO currency ändern .replace(§(und das 'USd'), currency)
-                items[item_] = steam_info # die möglichkeit in euro umzurechnen
-                items[item_]["amount"] = amount[item["classid"]]
-                items[item_]["total_median"] = f'${round(items[item_]["amount"] * float(steam_info["median_price"].split(" USD")[0].split("$")[1]), 2)}'
-                items[item_]["total_cashout"] = f'${round(items[item_]["amount"] * float(steam_info["lowest_price"].split(" USD")[0].split("$")[1]), 2)}'
-                items[item_]["buy_price"] = "0"
-                items[item_]["total_buy_price"] = "0"
-        except:
-            time.sleep(60)
-            
     all_totals = []
     all_cashouts = []
     all_amounts = []
 
     for it in items:
-        all_totals.append(float(items[it]["total_median"].split(currency)[1]))
-        all_cashouts.append(float(items[it]["total_cashout"].split(currency)[1]))
-        all_amounts.append(items[it]["amount"])
+        try:
+            all_totals.append(items[it]["total_median"])
+            all_cashouts.append(items[it]["total_cashout"])
+            all_amounts.append(items[it]["amount"])
+        except KeyError:
+            all_totals.append(0)
+            all_cashouts.append(0)
     total_inv_value = sum(all_totals)
     today_cashout = sum(all_cashouts)
     items["inventory_amount"] = sum(all_amounts)
