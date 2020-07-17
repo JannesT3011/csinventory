@@ -15,7 +15,6 @@ from csinventorypy import CSInventory
 with open("config.json") as cf:
     config = json.load(cf)
 
-# IMPORTANT; Dieser teil wird nur einmal in der Nacht gecallt und NICHT vom frontend, das frontend callt nur die Datenbank api
 api = Blueprint("api", __name__, url_prefix="/api")
 steam_client = SteamClient(config["steam_apikey"])
 db = Database()
@@ -25,16 +24,8 @@ db = Database()
 def refresh_inventory(steamid) -> jsonify:
     #steamid = request.get_json()["steamid"]
     currency = "$"
-    # TODO es muss ein Token übergeben werden, der diesen Teil autorisiert, wenn dieser nicht stimmt wird der teil nicht gecallt -> redirect zur db json call route
-    # TODO neue Method erstellen die du Uhrzeit checkt und den Programm teil um 0:01 triggert ODER wenn es viele ids in der DB gibt, jede Stunde den programmteil mit einer anderen ID triggert (for loop durch die IDs) -> wenn Prozess fertig: Email an Nutzer.
-    # TODO Nutzer kann sich sein INV in einem PDF doc runterladen (Items werden aufgeführt: `mengex Itemname`, am Ende steht der Heutige Cashout betrag, welcher auch auf den Startbildschirm des Nutzer (bei login stehen soll)) -> Aufbau wie bei einer Rechnung (FF; Unterschrift als joke am Ende)
-    # TODO Advanced Function: item per Steam api verkaufen über eigenen API token, bei login muss der USer seinen eigenen Api token angeben: wenn login -> Programm benutzt diesen Api token!
-    # TODO: check currency: if currency = EURO: currency=€
-    #data = request.get_json() # TODO: steamid nicht über paramter übergeben, sondern über body dict
-    #steamid = data["steam_id"]
-    #currence = data["currency"] 
 
-    items = CSInventory(steamid).get_inv_steamdata(config["steam_apikey"], False)
+    items = CSInventory(steamid).get_inv_steamdata(config["steam_apikey"], False) 
 
     all_totals = []
     all_cashouts = []
@@ -57,7 +48,7 @@ def refresh_inventory(steamid) -> jsonify:
     try:
         db.init_inventory_db(steamid)
         db.execute("inventory").update_one({"_id":steamid}, {"$set": {"inv": items}}) 
-        db.execute("inventory").update_one({"_id":steamid}, {"$set": {"history."+current(): items}}) # TODO time muss string sein
+        db.execute("inventory").update_one({"_id":steamid}, {"$set": {"history."+current(): items}}) 
         db.execute("inventory").update_one({"_id":steamid}, {"$set": {"last_refresh": current()}})
         return items
     except pymongo.errors.DuplicateKeyError:
@@ -72,7 +63,7 @@ def refresh_inventory(steamid) -> jsonify:
         return items
 
 
-@api.route("/inventory", methods=["POST"]) # TODO beim resfresh gibt es einen fehler, keine json data erkannt
+@api.route("/inventory", methods=["POST"])
 def get_inventory():
     data = request.get_json()
     steamid = data["steamid"]

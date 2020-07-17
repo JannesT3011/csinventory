@@ -1,3 +1,4 @@
 flask
 pymongo
 steampy
+git+https://github.com/Bmbus/csinventory-py
