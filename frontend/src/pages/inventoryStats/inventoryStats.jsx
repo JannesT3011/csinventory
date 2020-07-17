@@ -20,7 +20,7 @@ class InventoryStats extends React.Component {
         const response = await fetch(url, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({"steamid": this.props.match.params.steamid})
+            body: JSON.stringify({"steamid": this.props.match.params.steamid, "api_key": ""})
         })
         const data = await response.json()
         let x_data = []

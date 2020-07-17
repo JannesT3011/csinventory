@@ -22,7 +22,7 @@ class InventoryHistory extends React.Component {
         const response = await fetch(url, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({"steamid": this.props.match.params.steamid})
+            body: JSON.stringify({"steamid": this.props.match.params.steamid, "api_key": ""})
         })
         const data = await response.json()
         this.setState({history: data})
@@ -102,7 +102,7 @@ class InventoryHistory extends React.Component {
                 </div>
             </div>
         )
-    } // TODO display items on selectet date -> this.state.history.date
+    }
 }
 
 export default InventoryHistory;

@@ -2,9 +2,6 @@ from pymongo import MongoClient
 import pymongo
 from datetime import datetime
 import json
-# mpngodb oder sql
-# TODO: inventarwerte wird in einer Tablle mit primary key steamid gespeichert , andere werte zum einloggen in die USER table!
-# TODO error loggen und auf extra route speichern
 """
 LAYOUT:
 USER (login with steam)

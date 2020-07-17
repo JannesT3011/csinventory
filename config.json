@@ -1,7 +1,6 @@
 {
-    "steamid": "",
-    "steam_apikey": "",
-    "mongodb_link": "",
+    "steam_apikey": "D13799E79A69DE038BB9A50AD1703129",
+    "mongodb_link": "mongodb+srv://Bmbus:projectA@cluster0-ecd9z.mongodb.net/CSInvest?retryWrites=true&w=majority",
     "cluster": "CSInvest",
     "inventory_db_name": "inventory",
     "user_db_name": "user",
