@@ -13,10 +13,21 @@ This is (yet) a self hosting tool for searching CS-Inventorys. Just type the use
 - Coming soon 
 
 ## Preview 
-- Coming soon
+Home:
+![home](https://github.com/Bmbus/csinventory/blob/master/preview_img/home.png)
+</br>
+Inventory:
+![inventory](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory.png)
+</br>
+Inventory Stats:
+![inventory_stats](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory_stats.png)
+</br>
+Inventory History:
+![inventory_history](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory_history.png)
+</br>
 
 ## Api-Routes
-- Coming soon
+- coming soon
 
 ## Todo
 - [ ] finish README
