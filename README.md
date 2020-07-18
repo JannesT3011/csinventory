@@ -14,19 +14,19 @@ This is (yet) a self hosting tool for searching CS-Inventorys. Just type the use
 
 ## Preview 
 Home:
-<hr>
+</br>
 ![home](https://github.com/Bmbus/csinventory/blob/master/preview_img/home.png)
 </br>
 Inventory:
-<hr>
+</br>
 ![inventory](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory.png)
 </br>
 Inventory Stats:
-<hr>
+</br>
 ![inventory_stats](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory_stats.png)
 </br>
 Inventory History:
-<hr>
+</br>
 ![inventory_history](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory_history.png)
 </br>
 
