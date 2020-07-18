@@ -1,6 +1,7 @@
 <div align="center"> 
     <h1>CSInventory</h1>
     The place for Counter-Strike Inventorys
+    [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a33b6ad124fd4d41a3198a139b4b3449)](https://app.codacy.com/manual/Bmbus/csinventory?utm_source=github.com&utm_medium=referral&utm_content=Bmbus/csinventory&utm_campaign=Badge_Grade_Dashboard)
 </div>
 
 ## About
