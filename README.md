@@ -10,7 +10,7 @@ This is (yet) a self hosting tool for searching CS-Inventorys. Just type the use
 - Inventory history: inventory data on all tracked data (since the first search of the SteamID)
 
 ## Hosting
-- Coming soon 
+[Routes](https://github.com/Bmbus/csinventory/blob/master/api/api.md)
 
 ## Preview 
 Home:
