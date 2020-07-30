@@ -10,7 +10,8 @@ This is (yet) a self hosting tool for searching CS-Inventorys. Just type the use
 - Inventory history: inventory data on all tracked data (since the first search of the SteamID)
 
 ## Hosting
-[Routes](https://github.com/Bmbus/csinventory/blob/master/api/api.md)
+#### Installing Requirements:
+``pip3 install requirements.txt``
 
 ## Preview 
 Home:
@@ -31,7 +32,7 @@ Inventory History:
 </br>
 
 ## Api-Routes
-- coming soon
+[Routes](https://github.com/Bmbus/csinventory/blob/master/api/api.md)
 
 ## Todo
 - [ ] finish README
