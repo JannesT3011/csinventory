@@ -73,6 +73,7 @@ def get_inventory():
     else:
         try:
             result = db.execute("inventory").find_one({"_id":steamid})
+            last_refresh = result["last_refresh"]
             delta = datetime.strptime(current(), "%Y-%m-%d %H:%M:%S") - datetime.strptime(result["last_refresh"], "%Y-%m-%d %H:%M:%S")
             if result["inv"] == {}:
                 result = refresh_inventory(steamid)
@@ -80,6 +81,7 @@ def get_inventory():
                 result = refresh_inventory(steamid)
             else:
                 result = result["inv"]
+                result["last_refresh"] = last_refresh
         except:
             result = refresh_inventory(steamid)
     try:

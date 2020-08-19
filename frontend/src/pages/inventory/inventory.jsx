@@ -11,6 +11,7 @@ class Inventory extends React.Component {
         today_cashout: null,
         inv_amount: null,
         loading: false,
+        last_refresh: null
     }
 
     updateInventory = async() => {
@@ -33,7 +34,7 @@ class Inventory extends React.Component {
             body: JSON.stringify({"steamid": this.props.match.params.steamid, "update": false, "api_key": ""})
         })
         const data = await response.json()
-        this.setState({items: data})
+        this.setState({items: data, last_refresh: data["last_refresh"]})
         let elements = []
 
         Object.keys(data).map((item) => {
@@ -43,8 +44,8 @@ class Inventory extends React.Component {
                         <h3>{item}</h3>
                         <hr/>
                         <h3>Amount: {data[item]["amount"]}</h3>
-                        <h3>lowest price:{data[item]["lowest_price"]}</h3>
-                        <h3>totalcashout:{data[item]["total_cashout"]}</h3>
+                        <h3>Lowest Price:{data[item]["lowest_price"]}</h3>
+                        <h3>Total Cashout:{data[item]["total_cashout"]}</h3>
                         <h3>Median Price:{data[item]["median_price"]}</h3>
                     </div>
                 )
@@ -73,6 +74,10 @@ class Inventory extends React.Component {
                     <div className="output-total" align="center">
                         Todays Cashout: <br/>
                         {this.state.today_cashout}
+                    </div>
+                    <div className="output-total">
+                        Last refresh: <br/>
+                        {this.state.last_refresh}
                     </div>
                 </div>
                 <br/>
