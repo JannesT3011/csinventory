@@ -4,7 +4,7 @@ import "./inventory.scss"
 import InvBar from "../../components/invNavBar/invNavbar"
 import Loading from "../../components/loading/loading"
 
-class Inventory extends React.Component {
+class Inventory extends React.Component { // TODO QR -COde for current url
     state = {
         items: null,
         elements:null,
