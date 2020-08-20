@@ -18,10 +18,21 @@ with open("config.json") as cf:
 api = Blueprint("api", __name__, url_prefix="/api")
 steam_client = SteamClient(config["steam_apikey"])
 db = Database()
+API_KEY = config["secret_api_key"]
+
+
 # INVENTORY ROUTES
 
 @api.route("/inventory/refresh/<steamid>", methods=["GET", "POST"])
-def refresh_inventory(steamid) -> jsonify:
+def refresh_inventory(steamid, triggeredFromCode:bool=False) -> jsonify:
+    if not triggeredFromCode:
+        data = request.get_json()
+        try:
+            api_key = data["api_key"]
+        except KeyError:
+            return jsonify({"message": "Bad Request"}), 400
+        if api_key != API_KEY:
+            return jsonify({"message": "You are not authorized!"}), 401
     #steamid = request.get_json()["steamid"]
     currency = "$"
 
@@ -66,8 +77,15 @@ def refresh_inventory(steamid) -> jsonify:
 @api.route("/inventory", methods=["POST"])
 def get_inventory():
     data = request.get_json()
-    steamid = data["steamid"]
-    update = data["update"]
+    try:
+        steamid = data["steamid"]
+        update = data["update"]
+        api_key = data["api_key"]
+    except KeyError:
+        return jsonify({"message": "Bad Request"}), 400
+    if api_key != API_KEY:
+        return jsonify({"message": "You are not authorized!"}), 401
+
     if update:
         result = refresh_inventory(steamid)
     else:
@@ -92,7 +110,14 @@ def get_inventory():
 @api.route("/inventory/delete")
 def delete_inventory() -> jsonify:
     data = request.get_json()
-    steamid = data["steamid"]
+    try:
+        steamid = data["steamid"]
+        api_key = data["api_key"]
+    except KeyError:
+        return jsonify({"message": "Bad Request"}), 400
+    if api_key != API_KEY:
+        return jsonify({"message": "You are not authorized!"}), 401
+
     try:
         db.execute("inventory").delete_one({"_id":steamid})
     except:
@@ -103,7 +128,13 @@ def delete_inventory() -> jsonify:
 @api.route("/inventory/history", methods=["POST"])
 def history_inventory() -> jsonify:
     data = request.get_json()
-    steamid = data["steamid"]
+    try:
+        steamid = data["steamid"]
+        api_key = data["api_key"]
+    except KeyError:
+        return jsonify({"message": "Bad Request"}), 400
+    if api_key != API_KEY:
+        return jsonify({"message": "You are not authorized!"}), 401
     try:
         result = db.execute("inventory").find_one({"_id":steamid})
         return jsonify(result["history"]),200
@@ -113,7 +144,14 @@ def history_inventory() -> jsonify:
 @api.route("/inventory/stats", methods=["POST"])
 def inventory_stats():
     data = request.get_json()
-    steamid = data["steamid"]
+    try:
+        steamid = data["steamid"]
+        api_key = data["api_key"]
+    except KeyError:
+        return jsonify({"message": "Bad Request"}), 400
+    if api_key != API_KEY:
+        return jsonify({"message": "You are not authorized!"}), 401
+
     try:
         result = db.execute("inventory").find_one({"_id": steamid})["history"]
         results = {}
