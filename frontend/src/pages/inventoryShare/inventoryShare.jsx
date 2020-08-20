@@ -23,8 +23,8 @@ class InventoryShare extends React.Component {
                 <QRCode value={window.location.href.replace("share/", "")} className="Qr-code" size="200"/> 
                 <br/>
                 <br/>
-                <input type="text" value={window.location.href.replace("share/", "")} id="share-link"/>
-                <button onClick={this.copyLink} id="copy-button">Copy</button>
+                <input type="text" value={window.location.href.replace("share/", "")} id="share-link" readOnly/> <br/>
+                <button onClick={this.copyLink} id="copy-button">Copy!</button>
             </div>
         )
     }

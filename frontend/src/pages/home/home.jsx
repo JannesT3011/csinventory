@@ -1,7 +1,6 @@
 import React from "react"
 import "./home.scss"
 import {Link} from "react-router-dom"
-import Navbar from "../../components/navbar/navbar"
 
 class Home extends React.Component {
     state ={
@@ -12,7 +11,7 @@ class Home extends React.Component {
 
     handleChange = (event) => {
         const steamid = event.target.value
-        if (steamid == "" || steamid == null) {this.setState({steamid:null, url: "/"})} else { 
+        if (steamid === "" || steamid == null) {this.setState({steamid:null, url: "/"})} else { 
             const url = `/inventory/${steamid}`
             this.setState({url: url, steamid: steamid})
         }
