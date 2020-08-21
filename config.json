@@ -1,9 +1,0 @@
-{
-    "steam_apikey": "STEAMAPI_KEY",
-    "mongodb_link": "MONGODB_LINK",
-    "cluster": "CSInvest",
-    "inventory_db_name": "inventory",
-    "user_db_name": "user",
-    "config_db_name": "config",
-    "secret_api_key": "secret_api_key"
-}
