@@ -30,6 +30,7 @@ Inventory History:
 </br>
 ![inventory_history](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory_history.png)
 </br>
+![inventory_share](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory_share.png)
 
 ## Api-Routes
 [Routes](https://github.com/Bmbus/csinventory/blob/master/api/api.md)
