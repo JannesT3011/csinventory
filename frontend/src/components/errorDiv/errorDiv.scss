@@ -1,0 +1,22 @@
+$div_color: #353535;
+
+.ErrorDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: $div_color;
+    font-size: 13px;
+    color: #fff;
+    box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem, rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+    transition: all 500ms;
+    overflow: hidden;
+    border: 2px solid #E91E63;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

@@ -3,6 +3,7 @@ import Navbar from "../../components/navbar/navbar"
 import "./inventory.scss"
 import InvBar from "../../components/invNavBar/invNavbar"
 import Loading from "../../components/loading/loading"
+import ErrorDiv from "../../components/errorDiv/errorDiv"
 
 class Inventory extends React.Component { // TODO QR -COde for current url
     state = {
@@ -22,7 +23,7 @@ class Inventory extends React.Component { // TODO QR -COde for current url
         window.location.reload()
     }
 
-    async componentDidMount() { 
+    async componentDidMount() { // TODO: CHECK STATUS CODE HERE AND RETURN ERROR MESSAGE
         this.setState({loading: true})
         var element = document.getElementById("inventory-point")
         element.style.backgroundColor = "#fff"
@@ -33,6 +34,10 @@ class Inventory extends React.Component { // TODO QR -COde for current url
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({"steamid": this.props.match.params.steamid, "update": false, "api_key": ""})
         })
+        if (response.status != 200) { // TODO COMPONENT FOR ERRORS
+            this.setState({elements: <ErrorDiv statusCode={response.status}/>, loading: false})
+            return
+        }
         const data = await response.json()
         this.setState({items: data, last_refresh: data["last_refresh"]})
         let elements = []
@@ -66,18 +71,22 @@ class Inventory extends React.Component { // TODO QR -COde for current url
                 <div className="updater" align="center">
                     {this.state.loading ? <Loading/> : <button onClick={this.updateInventory} className="update">Update!</button>} <br/> <br/>
                 </div>
+                <div className="pdf-downloader" align="center">
+                    <button className="pdf">Download PDF</button>
+                </div>
+                <br/>
                 <div className="output-grid">
                     <div className="output-total" align="center">
                         Total Inventory Amount: <br/>
-                        {this.state.inv_amount}
+                        {this.state.loading ? null : this.state.inv_amount}
                     </div>
                     <div className="output-total" align="center">
                         Todays Cashout: <br/>
-                        {this.state.today_cashout}
+                        {this.state.loading ? null : this.state.today_cashout}
                     </div>
                     <div className="output-total">
                         Last refresh: <br/>
-                        {this.state.last_refresh}
+                        {this.state.loading ? null : this.state.last_refresh}
                     </div>
                 </div>
                 <br/>

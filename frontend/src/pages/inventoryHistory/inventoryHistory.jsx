@@ -1,6 +1,7 @@
 import React from "react"
 import Navbar from "../../components/navbar/navbar"
 import InvBar from "../../components/invNavBar/invNavbar"
+import ErrorDiv from "../../components/errorDiv/errorDiv"
 
 class InventoryHistory extends React.Component {
     state = {
@@ -24,6 +25,12 @@ class InventoryHistory extends React.Component {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({"steamid": this.props.match.params.steamid, "api_key": ""})
         })
+
+        if (response.status != 200) {
+            this.setState({elements: <ErrorDiv statusCode={response.status}/>})
+            return
+        }
+
         const data = await response.json()
         this.setState({history: data})
         let dates = []
