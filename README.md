@@ -10,9 +10,9 @@ This is (yet) a self hosting tool for searching CS-Inventorys. Just type the use
 - Inventory history: inventory data on all tracked data (since the first search of the SteamID)
 
 ## Hosting
-!! NOT PRODUCTION READY !!
-![frontend](https://github.com/Bmbus/csinventory/blob/master/frontend/README.md)
-![api](https://github.com/Bmbus/csinventory/blob/master/api/README.md)
+!! NOT PRODUCTION READY !! </br>
+![frontend](https://github.com/Bmbus/csinventory/blob/master/frontend/README.md) </br>
+![api](https://github.com/Bmbus/csinventory/blob/master/api/README.md) </br>
 
 ## Preview 
 Home:
