@@ -10,8 +10,9 @@ This is (yet) a self hosting tool for searching CS-Inventorys. Just type the use
 - Inventory history: inventory data on all tracked data (since the first search of the SteamID)
 
 ## Hosting
-#### Installing Requirements:
-``pip3 install requirements.txt``
+!! NOT PRODUCTION READY !! </br>
+![frontend](https://github.com/Bmbus/csinventory/blob/master/frontend/README.md) </br>
+![api](https://github.com/Bmbus/csinventory/blob/master/api/README.md) </br>
 
 ## Preview 
 Home:
@@ -29,6 +30,10 @@ Inventory Stats:
 Inventory History:
 </br>
 ![inventory_history](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory_history.png)
+</br>
+Inventory Share:
+</br>
+![inventory_share](https://github.com/Bmbus/csinventory/blob/master/preview_img/inventory_share.png)
 </br>
 
 ## Api-Routes

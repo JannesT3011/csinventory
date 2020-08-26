@@ -2,13 +2,15 @@ import React from "react"
 import Navbar from "../../components/navbar/navbar"
 import InvBar from "../../components/invNavBar/invNavbar"
 import {Line} from "react-chartjs-2"
-import { Redirect } from "react-router-dom"
+import ErrorDiv from "../../components/errorDiv/errorDiv"
 
 class InventoryStats extends React.Component {
     state = {
         x: null,
         y: null, 
         loading: false,
+        error: false,
+        error_element: null
     }
 
     async componentDidMount() {
@@ -22,6 +24,10 @@ class InventoryStats extends React.Component {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({"steamid": this.props.match.params.steamid, "api_key": ""})
         })
+        if (response.status != 200) {
+            this.setState({error: true, error_element: <ErrorDiv statusCode={response.status}/>})
+            return
+        }
         const data = await response.json()
         let x_data = []
         let y_data = []
@@ -29,7 +35,6 @@ class InventoryStats extends React.Component {
             x_data.push(x)
             y_data.push(parseFloat(data[x]["todays_cashout"].split("$")[1]))
         })
-        console.log(y_data)
         this.setState({loading: false, x: x_data, y: y_data})
     }
     render() {
@@ -38,6 +43,7 @@ class InventoryStats extends React.Component {
                 <Navbar title="Stats" steamid={this.props.match.params.steamid}/>
                 <InvBar steamid={this.props.match.params.steamid}/>
                 <br/>
+                {this.state.error ? <div className="item-grid">{this.state.error_element}</div> : 
                 <div align="center" className="chart">
                     <Line
                         data={{
@@ -49,7 +55,7 @@ class InventoryStats extends React.Component {
                             borderColor: '#c54964',
                         }}
                     />
-                </div>
+                </div>}
             </div>
         )
     }
