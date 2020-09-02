@@ -16,7 +16,7 @@ class CSInventoryDiscord(commands.AutoShardedBot):
         )
         self.creator = "Bmbus#8446"
         self.github_url = "https://github.com/Bmbus/csinventory"
-        self.db = ""
+        #self.db = Database()
 
         self.load_extension("cogs.dcinventory")
     
